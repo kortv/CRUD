@@ -1,6 +1,7 @@
 import React from 'react';
-import './EditForm.css';
+import get from 'lodash.get';
 import { Form, Input, Select, Button, Row, Col } from 'antd';
+import './EditForm.css';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -17,17 +18,9 @@ const EditForm = (props) => {
     e.preventDefault();
     props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        props.saveUser(values);
       }
-      console.log('Received values of form: ', err);
     });
-  }
-
-  const checkName = (rule, value, callback) => {
-    if (value && /^\w+\s\w+\s\w+$/.test(value)) {
-      callback();
-    }
-    callback('ФИО должно содержать "Фамилию Имя Отчество"!');
   }
 
   const checkPhone = (rule, value, callback) => {
@@ -44,17 +37,13 @@ const EditForm = (props) => {
   };
   const tailFormItemLayout = {
     wrapperCol: {
-      span: 14,
-      offset: 6,
+      span: 3,
+      offset: 17,
     },
   };
-  const prefixSelector = getFieldDecorator('prefix', {
-    initialValue: '+7',
-  })(
-    <Select className="icp-selector">
-      <Option value="+7">+7</Option>
-    </Select>
-  );
+  getFieldDecorator('id', {
+    initialValue: get(props, 'user.id')
+  })
   return (
     <Form onSubmit={handleSubmit}>
       <FormItem
@@ -63,10 +52,9 @@ const EditForm = (props) => {
         hasFeedback
       >
         {getFieldDecorator('fullName', {
+          initialValue: get(props, 'user.fullName'),
           rules: [{
             required: true, message: 'Фамилия Имя Отчество, обязательно!'
-          }, {
-            validator: checkName,
           }],
         })(
           <Input placeholder='Фамилия Имя Отчество' />
@@ -76,7 +64,8 @@ const EditForm = (props) => {
         <Col span={5} />
         <Col span={4}>
           <FormItem {...formItemLayout} label='Год'>
-          {getFieldDecorator('year', {
+          {getFieldDecorator('date.year', {
+            initialValue: get(props, 'user.date.year'),
             rules: [{
               required: true, message: 'Выберите год!'
             }],
@@ -92,7 +81,8 @@ const EditForm = (props) => {
         </Col>
         <Col span={6}>
           <FormItem {...formItemLayout} label='Месяц'>
-          {getFieldDecorator('month', {
+          {getFieldDecorator('date.month', {
+            initialValue: get(props, 'user.date.month'),
             rules: [{ required: true, message: 'Выберите месяц!' }],
           })(
             <Select className="">
@@ -103,7 +93,8 @@ const EditForm = (props) => {
         </Col>
         <Col span={6}>
           <FormItem {...formItemLayout} label='Число'>
-          {getFieldDecorator('day', {
+          {getFieldDecorator('date.day', {
+              initialValue: get(props, 'user.date.day'),
             rules: [{ required: true, message: 'Выберите день!' }],
           })(
             <Select className="">
@@ -120,6 +111,7 @@ const EditForm = (props) => {
         hasFeedback
       >
         {getFieldDecorator('address', {
+          initialValue: get(props, 'user.address'),
           rules: [{
             required: true, message: 'Заполните Адрес!'
           }],
@@ -134,6 +126,7 @@ const EditForm = (props) => {
         hasFeedback
       >
         {getFieldDecorator('city', {
+          initialValue: get(props, 'user.city'),
           rules: [{
             required: true, message: 'Заполните Город!'
           }],
@@ -144,9 +137,10 @@ const EditForm = (props) => {
 
       <FormItem
         {...formItemLayout}
-        label="Phone Number"
+        label="Номер телефона"
       >
         {getFieldDecorator('phone', {
+          initialValue: get(props, 'user.phone'),
           rules: [{
             required: true, message: 'Введите номер телефона!'
           }, {
@@ -154,14 +148,19 @@ const EditForm = (props) => {
           }],
         })(
           <Input
-            addonBefore={prefixSelector}
+            addonBefore='+7'
             type='phone'
             placeholder='9001234567'
           />
         )}
       </FormItem>
       <FormItem {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit" size="large">Сохранить</Button>
+        <Button
+          type="primary"
+          htmlType="submit"
+          size="large"
+          style={{ width: '100%' }}
+        >Сохранить</Button>
       </FormItem>
     </Form>
   );

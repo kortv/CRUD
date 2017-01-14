@@ -1,1 +1,9 @@
 @import '~antd/dist/antd.css';
+
+.app {
+  padding: 40px;
+}
+
+.modal__wraper > div {
+  min-width: 90% !important;
+}

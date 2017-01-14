@@ -1,8 +1,8 @@
 import React from 'react';
 import './EditForm.css';
 import { Form, Input, Select, Button, Row, Col } from 'antd';
-const FormItem = Form.Item;
-const Option = Select.Option;
+import moment from 'moment';
+moment.locale('Ru');
 
 const UserItem = ({
   address,
@@ -16,17 +16,20 @@ const UserItem = ({
 }) => {
   return (
     <Row>
-      <Col span={4}>
+      <Col span={6} offset={1}>
         {fullName}
       </Col>
-      <Col span={4}>
-        {fullName}
+      <Col span={3}>
+        {moment({ year, month: +month - 1, day}).format('DD MMMM YYYY')}
       </Col>
-      <Col span={4}>
-        {fullName}
+      <Col span={6}>
+        Адрес
       </Col>
-      <Col span={4}>
-        {fullName}
+      <Col span={3}>
+        Город
+      </Col>
+      <Col span={3}>
+        +7{phone}
       </Col>
     </Row>
   )
