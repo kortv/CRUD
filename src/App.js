@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Modal, Button, Menu, Dropdown, Icon, Tooltip } from 'antd';
+import { Table, Modal, Menu, Dropdown, Icon, Tooltip } from 'antd';
 import EditForm from './EditForm';
 import moment from 'moment';
 
@@ -138,7 +138,6 @@ class App extends Component {
   }
 
   saveUser = (user) => {
-    console.log(user);
     const { data } = this.state;
     let newData = [...data];
     if (user.id) {
@@ -201,6 +200,7 @@ class App extends Component {
           />
         </Modal>
         <Table
+          rowKey={(user) => user.id}
           pagination={false}
           columns={this.columns}
           dataSource={data}
