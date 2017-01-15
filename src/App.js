@@ -5,52 +5,6 @@ import moment from 'moment';
 
 moment.locale('Ru');
 
-const data = [
-  {
-    address: "ывап ц4е ывап ывап ывапы вап ывап ывап ывапывап",
-    city: "мвыфывафы",
-    date: {
-      day: "2",
-      month: "4",
-      year: "1925"
-    },
-    day: "2",
-    month: "4",
-    year: "1925",
-    fullName: "qwe asdfыв ывап",
-    phone: "1234123412",
-  },
-  {
-    address: "ывап ц4е ывап ывап ывапы вап ывап ывап ывапывап",
-    city: "мвыфывафы",
-    date: {
-      day: "2",
-      month: "4",
-      year: "1925"
-    },
-    day: "2",
-    month: "4",
-    year: "1925",
-    fullName: "qwe asdfыв ывап",
-    phone: "1234123412",
-  },
-  {
-    address: "ывап ц4е ывап ывап ывапы вап ывап ывап ывапывап",
-    city: "мвыфывафы",
-    date: {
-      day: "2",
-      month: "4",
-      year: "1925"
-    },
-    day: "2",
-    month: "4",
-    year: "1925",
-    fullName: "qwe asdfыв ывап",
-    phone: "1234123412",
-  },
-];
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -59,7 +13,7 @@ class App extends Component {
       isModal: false,
       data: JSON.parse(
         localStorage.getItem('usersData')
-      ) || data,
+      ) || [],
       editableUser: {},
     }
 
@@ -86,7 +40,7 @@ class App extends Component {
     }, {
       dataIndex: 'phone',
       key: 'phone',
-      title: 'номер телефона',
+      title: 'Номер телефона',
     }, {
       dataIndex: 'actions',
       key: 'actions',
@@ -204,6 +158,9 @@ class App extends Component {
           pagination={false}
           columns={this.columns}
           dataSource={data}
+          locale={{
+            emptyText: 'Нет данный',
+          }}
         />
       </div>
     );
